@@ -93,7 +93,7 @@ Estado del backlog (`instructions.md` §9). `[ ]` pendiente · `[~]` en curso/bl
 - [x] **Responsive área pública:** header sticky con marca truncable y botón adaptable ("Iniciar sesión"/"Entrar"); filtros en grilla 2-col en móvil y fila en `sm+`; título escalable; guarda ante datos nulos. Verificado `/publico` 200.
 
 ## Correcciones de revisión visual (2ª ronda)
-- [x] **#1 Gráficos en blanco en móvil:** las grillas de gráficos usaban columna implícita (ancho 0 para `ResponsiveContainer`). Añadido `grid-cols-1` base en dashboards autenticado y público.
+- [x] **#1 Gráficos en blanco en móvil:** causa raíz real → `ResponsiveContainer` de **Recharts 3.8.1** mide 0 de ancho en móvil y no redibuja. Solución definitiva: `components/charts/chart-container.tsx` mide el ancho con `ResizeObserver` y pasa un ancho en píxeles explícito a cada chart (se eliminó `ResponsiveContainer`). (`grid-cols-1` base se mantiene por consistencia, pero no era suficiente.)
 - [x] **#2 Login rediseñado** con colores corporativos `#003c4b` / `#eb8316` (`lib/constants.ts → CORPORATE`): panel de marca petróleo + acento naranja, responsivo, con enlace al público.
 - [x] **#3 Placeholder "all" en filtros:** `FilterSelect` unificado en `components/filter-select.tsx` (elimina 5 duplicados); el trigger muestra el nombre del filtro cuando está en "todos".
 - [x] **#4 Desborde horizontal (escritorio):** `min-w-0` en la columna de contenido del shell → las tablas anchas hacen scroll interno en vez de empujar la página.

@@ -1,16 +1,12 @@
 "use client";
 
-import {
-  Cell,
-  Legend,
-  Pie,
-  PieChart,
-  ResponsiveContainer,
-  Tooltip,
-} from "recharts";
+import { Cell, Legend, Pie, PieChart, Tooltip } from "recharts";
 
+import { ChartContainer } from "@/components/charts/chart-container";
 import { COLORS } from "@/lib/constants";
 import { formatUF } from "@/lib/format";
+
+const HEIGHT = 260;
 
 export function FacturadoDonut({
   facturado,
@@ -25,23 +21,25 @@ export function FacturadoDonut({
   ];
 
   return (
-    <ResponsiveContainer width="100%" height={260}>
-      <PieChart>
-        <Pie
-          data={data}
-          dataKey="value"
-          nameKey="name"
-          innerRadius={60}
-          outerRadius={95}
-          paddingAngle={2}
-        >
-          {data.map((d) => (
-            <Cell key={d.name} fill={d.color} />
-          ))}
-        </Pie>
-        <Tooltip formatter={(value) => `${formatUF(Number(value))} UF`} />
-        <Legend />
-      </PieChart>
-    </ResponsiveContainer>
+    <ChartContainer height={HEIGHT}>
+      {(width) => (
+        <PieChart width={width} height={HEIGHT}>
+          <Pie
+            data={data}
+            dataKey="value"
+            nameKey="name"
+            innerRadius={60}
+            outerRadius={95}
+            paddingAngle={2}
+          >
+            {data.map((d) => (
+              <Cell key={d.name} fill={d.color} />
+            ))}
+          </Pie>
+          <Tooltip formatter={(value) => `${formatUF(Number(value))} UF`} />
+          <Legend />
+        </PieChart>
+      )}
+    </ChartContainer>
   );
 }
