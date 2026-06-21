@@ -12,7 +12,7 @@ Estado del backlog (`instructions.md` §9). `[ ]` pendiente · `[~]` en curso/bl
 - [x] **T-13** Utilidades base (`lib/format.ts`, `lib/constants.ts`) — CA `formatUF(76243.36) === "76.243,36"` verificado.
 
 ## Épica 2 — Autenticación y shell
-- [ ] **T-20** Login
+- [x] **T-20** Login (`app/(auth)/login/page.tsx`)
 - [ ] **T-21** Layout protegido
 - [ ] **T-22** Dashboard placeholder
 
