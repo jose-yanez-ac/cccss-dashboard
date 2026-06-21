@@ -2,6 +2,14 @@ import { getKpis } from "@/lib/queries";
 import { formatPct, formatUF } from "@/lib/format";
 import { COLORS } from "@/lib/constants";
 import { KpiCard } from "@/components/kpi-card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { FacturadoDonut } from "@/components/charts/facturado-donut";
+import { ComparativoBars } from "@/components/charts/comparativo-bars";
 
 export default async function DashboardPage() {
   const kpis = await getKpis();
@@ -38,6 +46,34 @@ export default async function DashboardPage() {
           hint={`Brecha: ${formatUF(kpis?.brecha_ds153_uf)} UF`}
           accentColor={COLORS.violet}
         />
+      </div>
+
+      <div className="grid gap-4 lg:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base">Avance: facturado vs saldo</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <FacturadoDonut
+              facturado={kpis?.facturado_uf ?? 0}
+              saldo={kpis?.saldo_uf ?? 0}
+            />
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base">Comparativo (UF)</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ComparativoBars
+              contratado={kpis?.total_contratado_uf ?? 0}
+              facturado={kpis?.facturado_uf ?? 0}
+              ds153={kpis?.ds153_uf ?? 0}
+              proyeccion={kpis?.proyeccion_total_uf ?? 0}
+            />
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
