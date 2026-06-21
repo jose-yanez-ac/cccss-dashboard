@@ -12,7 +12,7 @@ import {
 
 import { cn } from "@/lib/utils";
 
-const NAV_ITEMS = [
+export const NAV_ITEMS = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/cambios-servicio", label: "Cambios de Servicio", icon: Replace },
   { href: "/ordenes-compra", label: "Órdenes de Compra", icon: ShoppingCart },
@@ -20,7 +20,7 @@ const NAV_ITEMS = [
   { href: "/empresas", label: "Empresas", icon: Building2 },
 ] as const;
 
-export function SidebarNav() {
+export function SidebarNav({ collapsed = false }: { collapsed?: boolean }) {
   const pathname = usePathname();
 
   return (
@@ -31,15 +31,17 @@ export function SidebarNav() {
           <Link
             key={href}
             href={href}
+            title={collapsed ? label : undefined}
             className={cn(
               "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
+              collapsed && "justify-center px-2",
               active
                 ? "bg-sidebar-accent text-sidebar-accent-foreground"
                 : "text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground",
             )}
           >
             <Icon className="size-4 shrink-0" />
-            {label}
+            {!collapsed && <span className="truncate">{label}</span>}
           </Link>
         );
       })}

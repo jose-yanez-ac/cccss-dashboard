@@ -73,7 +73,7 @@ Estado del backlog (`instructions.md` §9). `[ ]` pendiente · `[~]` en curso/bl
 - [x] **T3-E4** Eliminación de CCSS con doble confirmación (AlertDialog Base UI + escribir el nombre exacto)
 
 ## Épica F — Rediseño visual
-- [ ] **T3-F1** Lenguaje visual SaaS corporativo (shell, tarjetas, tablas, estados)
+- [x] **T3-F1** Lenguaje visual SaaS corporativo: sidebar navy colapsable + topbar con menú de usuario (`app-shell.tsx`), tarjetas con sombra, tablas con zebra/cabecera, KPIs rediseñados, skeletons de carga, raíz redirige a /dashboard
 
 ## Épica G — Dashboard público
 - [ ] **T3-G1** RPC `dashboard_public` (PARADA: SQL en cloud + regenerar tipos)
