@@ -40,7 +40,7 @@ Estado del backlog (`instructions.md` §9). `[ ]` pendiente · `[~]` en curso/bl
 - [x] **T-73** Filtros del dashboard (empresa/fase/estado/sector afectan tarjetas, gráficos y tabla; sin filtros = cifras de oro de la vista)
 
 ## Épica 8 — Cierre v1
-- [ ] **T-80** Calidad
+- [x] **T-80** Calidad (`tsc --noEmit` ✅, `lint` ✅; sin `any`; sin `service_role` en cliente; KPIs solo desde vistas)
 - [ ] **T-81** DoD
 
 ---
