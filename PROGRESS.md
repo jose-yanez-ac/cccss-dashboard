@@ -82,5 +82,5 @@ Estado del backlog (`instructions.md` §9). `[ ]` pendiente · `[~]` en curso/bl
 - [x] **T3-G4** Paridad verificada: la función agrega desde `v_ccss_resumen` (mismo origen) → cifras idénticas al autenticado.
 
 ## Épica H — Verificación y reporte
-- [ ] **T3-H1** Verificación integral (dev + tsc/lint/build)
-- [ ] **T3-H2** Resumen detallado
+- [x] **T3-H1** Verificación integral: `tsc`/`lint`/`build` limpios; e2e con curl → `/publico` 200 sin sesión (con cifras de oro), `/dashboard` y `/cambios-servicio` 307 → `/login`.
+- [x] **T3-H2** Resumen detallado (ver NOTES.md "Resumen Iteración 1.1").

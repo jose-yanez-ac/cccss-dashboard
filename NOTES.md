@@ -79,6 +79,39 @@ Resumen de la implementación, decisiones no obvias y mejoras futuras.
 ### Decisión de stack reforzada
 - **Base UI `MenuItem` = `onClick`, no `onSelect`.** Sumar a la regla "shadcn = Base UI → `render={…}`".
 
+## Resumen Iteración 1.1 (T3-H2)
+
+Por cada observación: causa raíz → solución → archivos → validación.
+
+1. **OC → 404.** *Causa:* el sidebar enlazaba `/ordenes-compra` sin página (CRUD de OC solo en el
+   detalle del CCSS). *Solución:* módulo standalone con lista/filtros/CRUD; crear OC pide el CCSS padre.
+   *Archivos:* `app/(app)/ordenes-compra/{page,loading}.tsx`, `components/oc/{oc-table,oc-form-dialog}.tsx`,
+   `lib/queries.ts` (`listAllOc`/`OcListItem`). *Validación:* `tsc/lint/build`; ruta en el build; 17 OC.
+2. **EP → 404.** *Causa:* idéntica (CRUD de EP solo en el detalle). *Solución:* módulo standalone con
+   regla de cupo; crear EP pide la OC y deriva monto/cursable. *Archivos:* `app/(app)/estados-pago/{page,loading}.tsx`,
+   `components/ep/{ep-table,ep-form-dialog}.tsx`, `lib/queries.ts` (`listAllEp`/`EpListItem`). *Validación:* build; 8 EP.
+3. **Editar/Eliminar inerte.** *Causa raíz:* `MenuItem` de Base UI usa `onClick`, no `onSelect` (API de Radix);
+   los handlers nunca se ejecutaban. *Solución:* `onSelect` → `onClick` en `components/{empresas,ccss,oc,ep}/*-actions.tsx`.
+   *Validación:* `grep` sin `onSelect`; `tsc/lint`.
+4. **Eliminar CCSS sin red de seguridad.** *Solución:* `AlertDialog` (Base UI) con doble barrera (aviso +
+   escribir el nombre exacto). *Archivos:* `components/ccss/ccss-row-actions.tsx`, `components/ui/alert-dialog.tsx`.
+5. **Rediseño SaaS.** *Solución:* sidebar navy colapsable + topbar con menú de usuario (`components/app-shell.tsx`,
+   `sidebar-nav.tsx`), tokens navy en `globals.css`, tarjetas con sombra (`ui/card.tsx`), tablas zebra/cabecera
+   (`ui/table.tsx`), KPIs rediseñados (`kpi-card.tsx`), skeletons (`ui/skeleton.tsx`, `skeletons.tsx`, `*/loading.tsx`),
+   raíz → `/dashboard` (`app/page.tsx`). *Validación:* `tsc/lint/build` sin regresiones.
+6. **Dashboard público.** *Solución:* RPC `dashboard_public` (security definer; tablas siguen cerradas a `anon`),
+   ruta `/publico` fuera del layout protegido con datos SSR vía llave anónima, solo lectura + CTA login, `middleware.ts`
+   excluye `/publico`. *Archivos:* `app/publico/page.tsx`, `components/dashboard/public-dashboard.tsx`,
+   `lib/dashboard-public.ts`, `middleware.ts`, `lib/database.types.ts` (regenerado). *Validación:* RPC con llave anónima
+   → 200, sin `observaciones`, cifras de oro; e2e curl → `/publico` 200 sin sesión, `/dashboard` 307 → `/login`.
+
+**Decisión técnica nueva:** evitar `setState` síncrono en `useEffect` (regla React Compiler
+`set-state-in-effect`) → en el público se cargan datos iniciales en el servidor y los filtros recargan
+desde el handler del evento (no desde un efecto).
+
+**Deuda/seguimiento:** la prueba de oro literal end-to-end (cursar un EP real y ver subir el KPI en pantalla)
+y el recorrido visual completo del rediseño quedan para verificación manual con `npm run dev` (no se mutaron datos reales).
+
 ## Mejoras futuras (fuera de alcance v1)
 - Vistas SQL de distribución (empresa/estado) para eliminar la agregación en JS.
 - Roles diferenciados en UI (aprobador/visualizador), auditoría con triggers, alertas de hitos.
