@@ -14,7 +14,7 @@ Estado del backlog (`instructions.md` §9). `[ ]` pendiente · `[~]` en curso/bl
 ## Épica 2 — Autenticación y shell
 - [x] **T-20** Login (`app/(auth)/login/page.tsx`)
 - [x] **T-21** Layout protegido (`app/(app)/layout.tsx`, `components/sidebar-nav.tsx`, `signOut`)
-- [ ] **T-22** Dashboard placeholder
+- [x] **T-22** Dashboard placeholder (`app/(app)/dashboard/page.tsx`)
 
 ## Épica 3 — Capa de datos
 - [ ] **T-30** Queries (`lib/queries.ts`)
