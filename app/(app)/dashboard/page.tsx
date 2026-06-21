@@ -1,6 +1,11 @@
-import { getKpis } from "@/lib/queries";
+import { getKpis, listCcss } from "@/lib/queries";
 import { formatPct, formatUF } from "@/lib/format";
 import { COLORS } from "@/lib/constants";
+import {
+  ccssPorEstado,
+  contratadoPorEmpresa,
+  proyeccionPorEmpresa,
+} from "@/lib/dashboard";
 import { KpiCard } from "@/components/kpi-card";
 import {
   Card,
@@ -10,9 +15,15 @@ import {
 } from "@/components/ui/card";
 import { FacturadoDonut } from "@/components/charts/facturado-donut";
 import { ComparativoBars } from "@/components/charts/comparativo-bars";
+import { PorEmpresaBars } from "@/components/charts/por-empresa-bars";
+import { EstadoDonut } from "@/components/charts/estado-donut";
 
 export default async function DashboardPage() {
-  const kpis = await getKpis();
+  const [kpis, ccss] = await Promise.all([getKpis(), listCcss()]);
+
+  const contratadoEmpresa = contratadoPorEmpresa(ccss);
+  const proyeccionEmpresa = proyeccionPorEmpresa(ccss);
+  const porEstado = ccssPorEstado(ccss);
 
   return (
     <div className="space-y-6">
@@ -75,6 +86,35 @@ export default async function DashboardPage() {
           </CardContent>
         </Card>
       </div>
+
+      <div className="grid gap-4 lg:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base">Contratado por empresa</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <PorEmpresaBars data={contratadoEmpresa} color={COLORS.petrol} />
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base">Proyección por empresa</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <PorEmpresaBars data={proyeccionEmpresa} color={COLORS.blue} />
+          </CardContent>
+        </Card>
+      </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-base">CCSS por estado</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <EstadoDonut data={porEstado} />
+        </CardContent>
+      </Card>
     </div>
   );
 }

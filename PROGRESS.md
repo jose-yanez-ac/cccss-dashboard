@@ -36,7 +36,7 @@ Estado del backlog (`instructions.md` §9). `[ ]` pendiente · `[~]` en curso/bl
 ## Épica 7 — Dashboard
 - [x] **T-70** Tarjetas KPI (desde `v_kpis_proyecto`: 76.243,36 · 16.247,98 (21,3%) · 320.765,88 · 223.087,00)
 - [x] **T-71** Gráficos núcleo (dona facturado/saldo + barras comparativas, desde la vista)
-- [ ] **T-72** Distribución
+- [x] **T-72** Distribución (barras contratado/proyección por empresa; dona por estado suma 35, colores `ESTADO_CCSS`). Agregación derivada de `v_ccss_resumen` — ver NOTES.
 - [ ] **T-73** Filtros del dashboard
 
 ## Épica 8 — Cierre v1
