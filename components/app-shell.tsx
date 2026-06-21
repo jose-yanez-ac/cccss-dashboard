@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { usePathname } from "next/navigation";
+import { useState, useTransition } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import {
   PanelLeftClose,
   PanelLeftOpen,
@@ -10,10 +10,11 @@ import {
   Menu,
   X,
 } from "lucide-react";
+import { toast } from "sonner";
 
 import { cn } from "@/lib/utils";
 import { NAV_ITEMS, SidebarNav } from "@/components/sidebar-nav";
-import { signOut } from "@/app/(app)/actions";
+import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -44,8 +45,23 @@ export function AppShell({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const router = useRouter();
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isSigningOut, startSignOut] = useTransition();
+
+  function handleSignOut() {
+    startSignOut(async () => {
+      const supabase = createClient();
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        toast.error("No se pudo cerrar sesión. Inténtalo nuevamente.");
+        return;
+      }
+      router.replace("/login");
+      router.refresh();
+    });
+  }
 
   return (
     <div className="flex min-h-screen bg-muted/30">
@@ -160,16 +176,14 @@ export function AppShell({
             <DropdownMenuContent align="end" className="w-56">
               <DropdownMenuLabel className="truncate">{email}</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <form action={signOut}>
-                <DropdownMenuItem
-                  render={
-                    <button type="submit" className="w-full">
-                      <LogOut className="size-4" />
-                      Salir
-                    </button>
-                  }
-                />
-              </form>
+              <DropdownMenuItem
+                disabled={isSigningOut}
+                onClick={handleSignOut}
+                className="text-destructive focus:text-destructive"
+              >
+                <LogOut className="size-4" />
+                {isSigningOut ? "Cerrando sesión…" : "Salir"}
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </header>
