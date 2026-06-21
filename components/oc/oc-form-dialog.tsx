@@ -44,7 +44,10 @@ function toFormValues(oc?: OrdenCompra): OcFormValues {
 
 type Props = {
   mode: "create" | "edit";
-  ccssId: string;
+  /** CCSS padre. Si se omite en modo create, se elige desde `ccssOptions`. */
+  ccssId?: string;
+  /** Opciones de CCSS para crear una OC desde la lista global. */
+  ccssOptions?: { id: string; nombre: string }[];
   oc?: OrdenCompra;
   trigger?: ReactElement;
   open?: boolean;
@@ -54,6 +57,7 @@ type Props = {
 export function OcFormDialog({
   mode,
   ccssId,
+  ccssOptions,
   oc,
   trigger,
   open,
@@ -67,6 +71,10 @@ export function OcFormDialog({
     : setInternalOpen;
 
   const [isPending, startTransition] = useTransition();
+  // Selección del CCSS padre cuando se crea una OC desde la lista global.
+  const [selectedCcss, setSelectedCcss] = useState("");
+  const [ccssError, setCcssError] = useState<string | null>(null);
+  const showCcssPicker = mode === "create" && !ccssId && !!ccssOptions;
 
   const {
     register,
@@ -80,12 +88,18 @@ export function OcFormDialog({
   });
 
   function onSubmit(values: OcFormValues) {
+    const effectiveCcssId = ccssId ?? selectedCcss;
+    if (!effectiveCcssId) {
+      setCcssError("Selecciona el cambio de servicio.");
+      return;
+    }
+
     const payload = ocFormToPayload(values);
     startTransition(async () => {
       const result =
         mode === "create"
-          ? await createOc(ccssId, payload)
-          : await updateOc(ccssId, oc!.id, payload);
+          ? await createOc(effectiveCcssId, payload)
+          : await updateOc(effectiveCcssId, oc!.id, payload);
 
       if (!result.ok) {
         toast.error(result.error ?? "No se pudo guardar.");
@@ -102,7 +116,11 @@ export function OcFormDialog({
       open={dialogOpen}
       onOpenChange={(next) => {
         setDialogOpen(next);
-        if (next) reset(toFormValues(oc));
+        if (next) {
+          reset(toFormValues(oc));
+          setSelectedCcss("");
+          setCcssError(null);
+        }
       }}
     >
       {trigger && <DialogTrigger render={trigger} />}
@@ -115,6 +133,33 @@ export function OcFormDialog({
         </DialogHeader>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
+          {showCcssPicker && (
+            <div className="space-y-2">
+              <Label>Cambio de servicio</Label>
+              <Select
+                value={selectedCcss}
+                onValueChange={(v) => {
+                  setSelectedCcss(v as string);
+                  setCcssError(null);
+                }}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Selecciona el CCSS padre" />
+                </SelectTrigger>
+                <SelectContent>
+                  {ccssOptions!.map((c) => (
+                    <SelectItem key={c.id} value={c.id}>
+                      {c.nombre}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              {ccssError && (
+                <p className="text-sm text-destructive">{ccssError}</p>
+              )}
+            </div>
+          )}
+
           <div className="space-y-2">
             <Label htmlFor="oc-numero">Número de OC</Label>
             <Input id="oc-numero" {...register("numero_oc")} />

@@ -68,7 +68,7 @@ Estado del backlog (`instructions.md` §9). `[ ]` pendiente · `[~]` en curso/bl
 
 ## Épica E — Correcciones funcionales
 - [x] **T3-E3** Arreglar acciones de fila inertes (`onSelect` → `onClick`, Base UI) en empresas/oc/ep/ccss
-- [ ] **T3-E1** Módulo standalone Órdenes de Compra (`/ordenes-compra`)
+- [x] **T3-E1** Módulo standalone Órdenes de Compra (`/ordenes-compra`) — lista 17 OC, filtros, enlace a CCSS, CRUD (crear con selector de CCSS padre)
 - [ ] **T3-E2** Módulo standalone Estados de Pago (`/estados-pago`)
 - [ ] **T3-E4** Eliminación de CCSS con doble confirmación
 

@@ -136,6 +136,47 @@ export async function listOc(ccssId: string): Promise<OcConResumen[]> {
   });
 }
 
+/** OC con su CCSS/empresa padre y facturado/saldo desde `v_oc_resumen`.
+ * Para el módulo standalone de Órdenes de Compra. */
+export type OcListItem = OrdenCompra & {
+  facturado_uf: number;
+  saldo_uf: number;
+  cambio_servicio: {
+    nombre: string;
+    empresa: { nombre: string } | null;
+  } | null;
+};
+
+/** Todas las OC del proyecto, con padre y facturado/saldo (desde la vista). */
+export async function listAllOc(): Promise<OcListItem[]> {
+  const supabase = await createClient();
+  const [ocResult, resumenResult] = await Promise.all([
+    supabase
+      .from("ordenes_compra")
+      .select(
+        "*, cambio_servicio:cambios_servicio(nombre, empresa:empresas(nombre))",
+      )
+      .order("numero_oc", { ascending: true }),
+    supabase.from("v_oc_resumen").select("*"),
+  ]);
+
+  if (ocResult.error) throw ocResult.error;
+  if (resumenResult.error) throw resumenResult.error;
+
+  const resumenById = new Map(
+    (resumenResult.data ?? []).map((r) => [r.id, r]),
+  );
+
+  return (ocResult.data ?? []).map((oc) => {
+    const resumen = resumenById.get(oc.id);
+    return {
+      ...oc,
+      facturado_uf: resumen?.facturado_uf ?? 0,
+      saldo_uf: resumen?.saldo_uf ?? oc.monto_uf,
+    };
+  });
+}
+
 /** Estados de pago de una OC. */
 export async function listEp(ocId: string): Promise<EstadoPago[]> {
   const supabase = await createClient();
@@ -143,6 +184,32 @@ export async function listEp(ocId: string): Promise<EstadoPago[]> {
     .from("estados_pago")
     .select("*")
     .eq("orden_compra_id", ocId)
+    .order("numero_ep", { ascending: true });
+  if (error) throw error;
+  return data ?? [];
+}
+
+/** EP con su OC y CCSS padre. Para el módulo standalone de Estados de Pago. */
+export type EpListItem = EstadoPago & {
+  orden_compra: {
+    numero_oc: string;
+    monto_uf: number;
+    cambio_servicio: {
+      id: string;
+      nombre: string;
+      empresa: { nombre: string } | null;
+    } | null;
+  } | null;
+};
+
+/** Todos los EP del proyecto, con OC y CCSS padre. */
+export async function listAllEp(): Promise<EpListItem[]> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("estados_pago")
+    .select(
+      "*, orden_compra:ordenes_compra(numero_oc, monto_uf, cambio_servicio:cambios_servicio(id, nombre, empresa:empresas(nombre)))",
+    )
     .order("numero_ep", { ascending: true });
   if (error) throw error;
   return data ?? [];
