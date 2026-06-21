@@ -10,6 +10,7 @@ import {
 } from "@tanstack/react-table";
 
 import type { Empresa } from "@/lib/queries";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   Table,
@@ -19,6 +20,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { EmpresaFormDialog } from "@/components/empresas/empresa-form-dialog";
+import { EmpresaRowActions } from "@/components/empresas/empresa-row-actions";
 
 export function EmpresasTable({ data }: { data: Empresa[] }) {
   const [globalFilter, setGlobalFilter] = useState("");
@@ -30,6 +33,16 @@ export function EmpresasTable({ data }: { data: Empresa[] }) {
         accessorKey: "tipo",
         header: "Tipo",
         cell: ({ row }) => row.original.tipo ?? "—",
+      },
+      {
+        id: "acciones",
+        header: "",
+        enableGlobalFilter: false,
+        cell: ({ row }) => (
+          <div className="flex justify-end">
+            <EmpresaRowActions empresa={row.original} />
+          </div>
+        ),
       },
     ],
     [],
@@ -49,12 +62,18 @@ export function EmpresasTable({ data }: { data: Empresa[] }) {
 
   return (
     <div className="space-y-4">
-      <Input
-        placeholder="Buscar empresa…"
-        value={globalFilter}
-        onChange={(e) => setGlobalFilter(e.target.value)}
-        className="max-w-sm"
-      />
+      <div className="flex items-center justify-between gap-4">
+        <Input
+          placeholder="Buscar empresa…"
+          value={globalFilter}
+          onChange={(e) => setGlobalFilter(e.target.value)}
+          className="max-w-sm"
+        />
+        <EmpresaFormDialog
+          mode="create"
+          trigger={<Button>Nueva empresa</Button>}
+        />
+      </div>
       <div className="rounded-md border bg-background">
         <Table>
           <TableHeader>

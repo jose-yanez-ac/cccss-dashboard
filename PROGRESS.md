@@ -21,7 +21,7 @@ Estado del backlog (`instructions.md` §9). `[ ]` pendiente · `[~]` en curso/bl
 
 ## Épica 4 — Mantenedor Empresas
 - [x] **T-40** Lista empresas (tabla `@tanstack/react-table` + búsqueda; 15 empresas del seed)
-- [ ] **T-41** CRUD empresas
+- [x] **T-41** CRUD empresas (Server Actions + revalidatePath + sonner; manejo RLS). Patrón base reutilizable.
 
 ## Épica 5 — Cambios de Servicio
 - [ ] **T-50** Lista CCSS

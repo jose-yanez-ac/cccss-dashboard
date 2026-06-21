@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { SidebarNav } from "@/components/sidebar-nav";
 import { Button } from "@/components/ui/button";
+import { Toaster } from "@/components/ui/sonner";
 import { signOut } from "./actions";
 
 export default async function AppLayout({
@@ -44,6 +45,7 @@ export default async function AppLayout({
         </header>
         <main className="flex-1 p-6">{children}</main>
       </div>
+      <Toaster richColors position="top-right" />
     </div>
   );
 }
