@@ -31,7 +31,7 @@ Estado del backlog (`instructions.md` §9). `[ ]` pendiente · `[~]` en curso/bl
 
 ## Épica 6 — Órdenes de Compra y Estados de Pago
 - [x] **T-60** CRUD OC (en detalle; revalida vista → actualiza contratado_uf)
-- [ ] **T-61** CRUD EP (prueba de oro)
+- [x] **T-61** CRUD EP (prueba de oro) — validación Σ EP cursados ≤ monto OC (cliente + server autoritativo). Verificado en BD: `facturado_uf (vista) = Σ cursado`; revalida lista+detalle+dashboard.
 
 ## Épica 7 — Dashboard
 - [ ] **T-70** Tarjetas KPI

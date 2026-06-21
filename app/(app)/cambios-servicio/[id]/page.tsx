@@ -14,6 +14,8 @@ import {
 import { EstadoBadge } from "@/components/ccss/estado-badge";
 import { OcFormDialog } from "@/components/oc/oc-form-dialog";
 import { OcActions } from "@/components/oc/oc-actions";
+import { EpFormDialog } from "@/components/ep/ep-form-dialog";
+import { EpActions } from "@/components/ep/ep-actions";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -145,6 +147,10 @@ export default async function CcssDetallePage({
         ) : (
           ocs.map((oc, i) => {
             const eps = epsPorOc[i];
+            // Suma de EP cursados de esta OC (para validar el tope al crear/editar).
+            const cursadoTotal = eps
+              .filter((e) => e.estado === "cursado")
+              .reduce((acc, e) => acc + e.monto_uf, 0);
             return (
               <Card key={oc.id}>
                 <CardHeader>
@@ -174,7 +180,21 @@ export default async function CcssDetallePage({
                   </dl>
 
                   <div>
-                    <p className="mb-2 text-sm font-medium">Estados de Pago</p>
+                    <div className="mb-2 flex items-center justify-between">
+                      <p className="text-sm font-medium">Estados de Pago</p>
+                      <EpFormDialog
+                        mode="create"
+                        ccssId={id}
+                        ocId={oc.id}
+                        montoOcUf={oc.monto_uf}
+                        cursadoOtrosUf={cursadoTotal}
+                        trigger={
+                          <Button variant="outline" size="sm">
+                            Agregar EP
+                          </Button>
+                        }
+                      />
+                    </div>
                     {eps.length === 0 ? (
                       <p className="text-sm text-muted-foreground">
                         Sin estados de pago.
@@ -190,6 +210,7 @@ export default async function CcssDetallePage({
                                 Monto UF
                               </TableHead>
                               <TableHead>Estado</TableHead>
+                              <TableHead />
                             </TableRow>
                           </TableHeader>
                           <TableBody>
@@ -212,6 +233,20 @@ export default async function CcssDetallePage({
                                   >
                                     {ESTADO_EP_LABEL[ep.estado]}
                                   </Badge>
+                                </TableCell>
+                                <TableCell className="text-right">
+                                  <EpActions
+                                    ccssId={id}
+                                    ocId={oc.id}
+                                    montoOcUf={oc.monto_uf}
+                                    cursadoOtrosUf={
+                                      cursadoTotal -
+                                      (ep.estado === "cursado"
+                                        ? ep.monto_uf
+                                        : 0)
+                                    }
+                                    ep={ep}
+                                  />
                                 </TableCell>
                               </TableRow>
                             ))}
