@@ -398,6 +398,16 @@ export type Database = {
       }
     }
     Functions: {
+      dashboard_public: {
+        Args: {
+          p_empresa?: string
+          p_estado?: string
+          p_fase?: string
+          p_proyecto?: string
+          p_sector?: string
+        }
+        Returns: Json
+      }
       rol_actual: { Args: never; Returns: string }
     }
     Enums: {

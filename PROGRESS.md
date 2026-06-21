@@ -76,10 +76,10 @@ Estado del backlog (`instructions.md` §9). `[ ]` pendiente · `[~]` en curso/bl
 - [x] **T3-F1** Lenguaje visual SaaS corporativo: sidebar navy colapsable + topbar con menú de usuario (`app-shell.tsx`), tarjetas con sombra, tablas con zebra/cabecera, KPIs rediseñados, skeletons de carga, raíz redirige a /dashboard
 
 ## Épica G — Dashboard público
-- [ ] **T3-G1** RPC `dashboard_public` (PARADA: SQL en cloud + regenerar tipos)
-- [ ] **T3-G2** Ruta pública fuera del layout protegido + middleware
-- [ ] **T3-G3** Solo lectura (sin controles de administración)
-- [ ] **T3-G4** Paridad de datos con el dashboard autenticado
+- [x] **T3-G1** RPC `dashboard_public` aplicado por el usuario en el cloud + tipos regenerados. Verificado con llave anónima (200, sin observaciones, cifras de oro).
+- [x] **T3-G2** Ruta pública `/publico` fuera del layout protegido; `middleware.ts` excluye `/publico`. Datos iniciales SSR con llave anónima.
+- [x] **T3-G3** Solo lectura: sin sidebar ni controles de administración; CTA "Iniciar sesión".
+- [x] **T3-G4** Paridad verificada: la función agrega desde `v_ccss_resumen` (mismo origen) → cifras idénticas al autenticado.
 
 ## Épica H — Verificación y reporte
 - [ ] **T3-H1** Verificación integral (dev + tsc/lint/build)

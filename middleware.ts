@@ -12,7 +12,8 @@ export const config = {
      * Aplica a todas las rutas excepto:
      * - _next/static, _next/image (assets internos)
      * - favicon.ico y archivos de imagen estáticos
+     * - /publico (dashboard público sin sesión)
      */
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    "/((?!_next/static|_next/image|favicon.ico|publico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };
