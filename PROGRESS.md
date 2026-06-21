@@ -8,7 +8,7 @@ Estado del backlog (`instructions.md` §9). `[ ]` pendiente · `[~]` en curso/bl
 ## Épica 1 — Infraestructura de conexión
 - [x] **T-10** Cliente browser (`lib/supabase/client.ts`)
 - [x] **T-11** Cliente server (`lib/supabase/server.ts`)
-- [ ] **T-12** Middleware de sesión (`middleware.ts`)
+- [x] **T-12** Middleware de sesión (`middleware.ts` + `lib/supabase/middleware.ts`)
 - [ ] **T-13** Utilidades base (`lib/format.ts`, `lib/constants.ts`)
 
 ## Épica 2 — Autenticación y shell
