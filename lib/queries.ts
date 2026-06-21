@@ -22,6 +22,26 @@ export type OcConResumen = OrdenCompra & {
   saldo_uf: number;
 };
 
+/** Campos editables de un CCSS (tabla base), incluido `fecha_entrega_terreno`
+ * que la vista no expone. Se usa para precargar el formulario de edición. */
+export type CcssEditable = Pick<
+  Tables<"cambios_servicio">,
+  | "id"
+  | "empresa_id"
+  | "nombre"
+  | "fase"
+  | "tipo_financiamiento"
+  | "proyeccion_uf"
+  | "sector"
+  | "ubicacion"
+  | "plazo_dias_habiles"
+  | "fecha_entrega_terreno"
+  | "observaciones"
+>;
+
+const CCSS_EDITABLE_COLUMNS =
+  "id,empresa_id,nombre,fase,tipo_financiamiento,proyeccion_uf,sector,ubicacion,plazo_dias_habiles,fecha_entrega_terreno,observaciones";
+
 export type CcssFiltros = {
   empresaId?: string;
   fase?: Enums<"fase_ccss">;
@@ -72,6 +92,16 @@ export async function getCcss(id: string): Promise<CcssListItem | null> {
     .maybeSingle();
   if (error) throw error;
   return data;
+}
+
+/** Campos editables de todos los CCSS (tabla base), indexable por id. */
+export async function listCcssEditable(): Promise<CcssEditable[]> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("cambios_servicio")
+    .select(CCSS_EDITABLE_COLUMNS);
+  if (error) throw error;
+  return data ?? [];
 }
 
 /** Órdenes de compra de un CCSS, enriquecidas con facturado/saldo de `v_oc_resumen`. */

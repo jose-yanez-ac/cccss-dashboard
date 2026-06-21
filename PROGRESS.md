@@ -26,7 +26,7 @@ Estado del backlog (`instructions.md` §9). `[ ]` pendiente · `[~]` en curso/bl
 ## Épica 5 — Cambios de Servicio
 - [x] **T-50** Lista CCSS (desde `v_ccss_resumen`, 35 filas, UF y badges de estado)
 - [x] **T-51** Filtros CCSS (empresa, fase, financiamiento, estado, sector — combinables + limpiar)
-- [ ] **T-52** CRUD CCSS
+- [x] **T-52** CRUD CCSS (dialog con selects vía Controller; payload normalizado y revalidado en server action)
 - [ ] **T-53** Detalle CCSS
 
 ## Épica 6 — Órdenes de Compra y Estados de Pago

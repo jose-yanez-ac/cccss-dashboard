@@ -9,7 +9,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-import type { CcssListItem } from "@/lib/queries";
+import type { CcssEditable, CcssListItem, Empresa } from "@/lib/queries";
 import { formatUF } from "@/lib/format";
 import {
   ESTADO_CCSS,
@@ -17,6 +17,7 @@ import {
   SECTOR_LABEL,
   TIPO_FINANCIAMIENTO_LABEL,
 } from "@/lib/constants";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -34,6 +35,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { EstadoBadge } from "@/components/ccss/estado-badge";
+import { CcssFormDialog } from "@/components/ccss/ccss-form-dialog";
+import { CcssRowActions } from "@/components/ccss/ccss-row-actions";
 
 const ALL = "all";
 
@@ -83,9 +86,22 @@ const INITIAL_FILTERS: Filters = {
   sector: ALL,
 };
 
-export function CcssTable({ data }: { data: CcssListItem[] }) {
+export function CcssTable({
+  data,
+  empresas,
+  editables,
+}: {
+  data: CcssListItem[];
+  empresas: Empresa[];
+  editables: CcssEditable[];
+}) {
   const [globalFilter, setGlobalFilter] = useState("");
   const [filters, setFilters] = useState<Filters>(INITIAL_FILTERS);
+
+  const editableById = useMemo(
+    () => new Map(editables.map((e) => [e.id, e])),
+    [editables],
+  );
 
   const empresaOptions = useMemo<FilterOption[]>(() => {
     const names = Array.from(
@@ -179,8 +195,27 @@ export function CcssTable({ data }: { data: CcssListItem[] }) {
         header: "Estado",
         cell: ({ row }) => <EstadoBadge estado={row.original.estado} />,
       },
+      {
+        id: "acciones",
+        header: "",
+        enableGlobalFilter: false,
+        cell: ({ row }) => (
+          <div className="flex justify-end">
+            <CcssRowActions
+              id={row.original.id ?? ""}
+              nombre={row.original.nombre ?? ""}
+              empresas={empresas}
+              editable={
+                row.original.id
+                  ? editableById.get(row.original.id)
+                  : undefined
+              }
+            />
+          </div>
+        ),
+      },
     ],
-    [],
+    [empresas, editableById],
   );
 
   // @tanstack/react-table maneja su propio estado interno; el plugin del React
@@ -197,12 +232,19 @@ export function CcssTable({ data }: { data: CcssListItem[] }) {
 
   return (
     <div className="space-y-4">
-      <Input
-        placeholder="Buscar por empresa o nombre…"
-        value={globalFilter}
-        onChange={(e) => setGlobalFilter(e.target.value)}
-        className="max-w-sm"
-      />
+      <div className="flex items-center justify-between gap-4">
+        <Input
+          placeholder="Buscar por empresa o nombre…"
+          value={globalFilter}
+          onChange={(e) => setGlobalFilter(e.target.value)}
+          className="max-w-sm"
+        />
+        <CcssFormDialog
+          mode="create"
+          empresas={empresas}
+          trigger={<Button>Nuevo cambio de servicio</Button>}
+        />
+      </div>
       <div className="flex flex-wrap items-center gap-2">
         <FilterSelect
           label="Empresa"
