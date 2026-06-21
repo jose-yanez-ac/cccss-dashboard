@@ -62,6 +62,23 @@ Resumen de la implementación, decisiones no obvias y mejoras futuras.
 `v_kpis_proyecto` → 76243.36 / 16247.98 / 320765.88 / 97678.88 / 35 (verificado vía PostgREST).
 `facturado_uf (vista) = Σ EP cursados` (verificado), lo que valida la prueba de oro (T-61).
 
+## Iteración 1.1 — Diagnóstico (Épica D) y correcciones
+
+### Causas raíz (confirmadas en el repo, no hipótesis)
+1. **OC → 404.** El sidebar enlaza `/ordenes-compra` (`components/sidebar-nav.tsx:18`) pero no existe
+   `app/(app)/ordenes-compra/page.tsx`. En la v1 el CRUD de OC vive solo dentro del detalle del CCSS.
+   *Fix:* módulo standalone `app/(app)/ordenes-compra/` + `listAllOc(filtros)` en `lib/queries.ts`.
+2. **EP → 404.** Igual que OC: el sidebar enlaza `/estados-pago` pero no existe la página.
+   *Fix:* módulo standalone `app/(app)/estados-pago/` + `listAllEp(filtros)`.
+3. **Edición de CCSS inerte (bug sistémico).** El `MenuItem` de Base UI usa **`onClick`** y `closeOnClick`;
+   **no existe `onSelect`** (esa es API de Radix). Las acciones de fila usaban `onSelect={(e)=>{…}}`, que
+   Base UI ignora → el diálogo nunca abría → "Editar/Eliminar" no hacían nada. 8 usos en 4 archivos
+   (`components/{empresas,oc,ep,ccss}/*-actions.tsx`). La Server Action `updateCcss` + `revalidatePath`
+   y el formulario `zod` ya estaban correctos. *Fix:* `onSelect` → `onClick` en los 4 archivos.
+
+### Decisión de stack reforzada
+- **Base UI `MenuItem` = `onClick`, no `onSelect`.** Sumar a la regla "shadcn = Base UI → `render={…}`".
+
 ## Mejoras futuras (fuera de alcance v1)
 - Vistas SQL de distribución (empresa/estado) para eliminar la agregación en JS.
 - Roles diferenciados en UI (aprobador/visualizador), auditoría con triggers, alertas de hitos.

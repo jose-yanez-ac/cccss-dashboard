@@ -58,3 +58,29 @@ Estado del backlog (`instructions.md` §9). `[ ]` pendiente · `[~]` en curso/bl
 
 ## Notas / bloqueos
 - **T-00 (2026-06-20):** No existe `lib/database.types.ts`. La generación requiere `npx supabase login` (flujo interactivo por navegador) que no puedo ejecutar de forma autónoma. A la espera de que el humano genere los tipos. Project ref detectado en `.env.local`: `iqwhscdhsyqrlvcyvyau`.
+
+---
+
+# Iteración 1.1 (`instructions3.md`)
+
+## Épica D — Diagnóstico
+- [x] **T3-D1** Auditoría del repo + causa raíz de OC 404 / EP 404 / edición CCSS inerte (ver NOTES.md "Iteración 1.1"). Aprobado por el usuario.
+
+## Épica E — Correcciones funcionales
+- [ ] **T3-E3** Arreglar acciones de fila inertes (`onSelect` → `onClick`, Base UI) en empresas/oc/ep/ccss
+- [ ] **T3-E1** Módulo standalone Órdenes de Compra (`/ordenes-compra`)
+- [ ] **T3-E2** Módulo standalone Estados de Pago (`/estados-pago`)
+- [ ] **T3-E4** Eliminación de CCSS con doble confirmación
+
+## Épica F — Rediseño visual
+- [ ] **T3-F1** Lenguaje visual SaaS corporativo (shell, tarjetas, tablas, estados)
+
+## Épica G — Dashboard público
+- [ ] **T3-G1** RPC `dashboard_public` (PARADA: SQL en cloud + regenerar tipos)
+- [ ] **T3-G2** Ruta pública fuera del layout protegido + middleware
+- [ ] **T3-G3** Solo lectura (sin controles de administración)
+- [ ] **T3-G4** Paridad de datos con el dashboard autenticado
+
+## Épica H — Verificación y reporte
+- [ ] **T3-H1** Verificación integral (dev + tsc/lint/build)
+- [ ] **T3-H2** Resumen detallado
