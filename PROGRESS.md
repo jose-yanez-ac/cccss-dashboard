@@ -67,7 +67,7 @@ Estado del backlog (`instructions.md` §9). `[ ]` pendiente · `[~]` en curso/bl
 - [x] **T3-D1** Auditoría del repo + causa raíz de OC 404 / EP 404 / edición CCSS inerte (ver NOTES.md "Iteración 1.1"). Aprobado por el usuario.
 
 ## Épica E — Correcciones funcionales
-- [ ] **T3-E3** Arreglar acciones de fila inertes (`onSelect` → `onClick`, Base UI) en empresas/oc/ep/ccss
+- [x] **T3-E3** Arreglar acciones de fila inertes (`onSelect` → `onClick`, Base UI) en empresas/oc/ep/ccss
 - [ ] **T3-E1** Módulo standalone Órdenes de Compra (`/ordenes-compra`)
 - [ ] **T3-E2** Módulo standalone Estados de Pago (`/estados-pago`)
 - [ ] **T3-E4** Eliminación de CCSS con doble confirmación

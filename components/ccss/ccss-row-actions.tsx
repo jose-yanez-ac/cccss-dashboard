@@ -70,19 +70,13 @@ export function CcssRowActions({
           <DropdownMenuSeparator />
           <DropdownMenuItem
             disabled={!editable}
-            onSelect={(e) => {
-              e.preventDefault();
-              setEditOpen(true);
-            }}
+            onClick={() => setEditOpen(true)}
           >
             Editar
           </DropdownMenuItem>
           <DropdownMenuItem
             className="text-destructive focus:text-destructive"
-            onSelect={(e) => {
-              e.preventDefault();
-              setDeleteOpen(true);
-            }}
+            onClick={() => setDeleteOpen(true)}
           >
             Eliminar
           </DropdownMenuItem>

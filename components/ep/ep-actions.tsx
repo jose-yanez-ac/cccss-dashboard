@@ -65,19 +65,13 @@ export function EpActions({
         />
         <DropdownMenuContent align="end">
           <DropdownMenuItem
-            onSelect={(e) => {
-              e.preventDefault();
-              setEditOpen(true);
-            }}
+            onClick={() => setEditOpen(true)}
           >
             Editar EP
           </DropdownMenuItem>
           <DropdownMenuItem
             className="text-destructive focus:text-destructive"
-            onSelect={(e) => {
-              e.preventDefault();
-              setDeleteOpen(true);
-            }}
+            onClick={() => setDeleteOpen(true)}
           >
             Eliminar EP
           </DropdownMenuItem>

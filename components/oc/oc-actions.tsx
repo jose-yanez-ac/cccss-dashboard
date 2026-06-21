@@ -59,19 +59,13 @@ export function OcActions({
         />
         <DropdownMenuContent align="end">
           <DropdownMenuItem
-            onSelect={(e) => {
-              e.preventDefault();
-              setEditOpen(true);
-            }}
+            onClick={() => setEditOpen(true)}
           >
             Editar OC
           </DropdownMenuItem>
           <DropdownMenuItem
             className="text-destructive focus:text-destructive"
-            onSelect={(e) => {
-              e.preventDefault();
-              setDeleteOpen(true);
-            }}
+            onClick={() => setDeleteOpen(true)}
           >
             Eliminar OC
           </DropdownMenuItem>
