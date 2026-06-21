@@ -20,7 +20,7 @@ Estado del backlog (`instructions.md` §9). `[ ]` pendiente · `[~]` en curso/bl
 - [x] **T-30** Queries (`lib/queries.ts`) — agregados solo desde vistas; `v_kpis_proyecto` verificada contra cifras de oro (76243.36 / 16247.98 / 320765.88 / 97678.88 / 35).
 
 ## Épica 4 — Mantenedor Empresas
-- [ ] **T-40** Lista empresas
+- [x] **T-40** Lista empresas (tabla `@tanstack/react-table` + búsqueda; 15 empresas del seed)
 - [ ] **T-41** CRUD empresas
 
 ## Épica 5 — Cambios de Servicio
