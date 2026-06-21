@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import {
   type ColumnDef,
   flexRender,
@@ -139,7 +140,21 @@ export function CcssTable({
         header: "Empresa",
         accessorFn: (row) => row.empresa?.nombre ?? "",
       },
-      { accessorKey: "nombre", header: "Nombre" },
+      {
+        accessorKey: "nombre",
+        header: "Nombre",
+        cell: ({ row }) =>
+          row.original.id ? (
+            <Link
+              href={`/cambios-servicio/${row.original.id}`}
+              className="font-medium text-primary underline-offset-4 hover:underline"
+            >
+              {row.original.nombre}
+            </Link>
+          ) : (
+            row.original.nombre
+          ),
+      },
       {
         accessorKey: "fase",
         header: "Fase",

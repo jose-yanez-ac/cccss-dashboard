@@ -27,7 +27,7 @@ Estado del backlog (`instructions.md` §9). `[ ]` pendiente · `[~]` en curso/bl
 - [x] **T-50** Lista CCSS (desde `v_ccss_resumen`, 35 filas, UF y badges de estado)
 - [x] **T-51** Filtros CCSS (empresa, fase, financiamiento, estado, sector — combinables + limpiar)
 - [x] **T-52** CRUD CCSS (dialog con selects vía Controller; payload normalizado y revalidado en server action)
-- [ ] **T-53** Detalle CCSS
+- [x] **T-53** Detalle CCSS (`[id]` con jerarquía OC→EP y subtotales desde `v_oc_resumen`; ENEL muestra sus 2 OC)
 
 ## Épica 6 — Órdenes de Compra y Estados de Pago
 - [ ] **T-60** CRUD OC
