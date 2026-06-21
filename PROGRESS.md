@@ -30,7 +30,7 @@ Estado del backlog (`instructions.md` §9). `[ ]` pendiente · `[~]` en curso/bl
 - [x] **T-53** Detalle CCSS (`[id]` con jerarquía OC→EP y subtotales desde `v_oc_resumen`; ENEL muestra sus 2 OC)
 
 ## Épica 6 — Órdenes de Compra y Estados de Pago
-- [ ] **T-60** CRUD OC
+- [x] **T-60** CRUD OC (en detalle; revalida vista → actualiza contratado_uf)
 - [ ] **T-61** CRUD EP (prueba de oro)
 
 ## Épica 7 — Dashboard

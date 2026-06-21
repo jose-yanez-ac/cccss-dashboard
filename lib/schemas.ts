@@ -68,6 +68,87 @@ export const ccssPayloadSchema = z.object({
 
 export type CcssPayload = z.infer<typeof ccssPayloadSchema>;
 
+/* ── Órdenes de Compra ───────────────────────────────────────────────── */
+
+const ESTADOS_OC = [
+  "emitida",
+  "pagada_parcial",
+  "pagada_total",
+  "anulada",
+] as const;
+
+export const ocFormSchema = z.object({
+  numero_oc: z.string().trim().min(1, "El número de OC es obligatorio"),
+  monto_uf: numeroNoNegativo("Monto UF inválido").refine(
+    (v) => v !== "",
+    "El monto es obligatorio",
+  ),
+  fecha_emision: z.string(),
+  estado: z.enum(ESTADOS_OC),
+});
+
+export type OcFormValues = z.infer<typeof ocFormSchema>;
+
+export const ocPayloadSchema = z.object({
+  numero_oc: z.string().trim().min(1),
+  monto_uf: z.number().min(0),
+  fecha_emision: z.string().nullable(),
+  estado: z.enum(ESTADOS_OC),
+});
+
+export type OcPayload = z.infer<typeof ocPayloadSchema>;
+
+export function ocFormToPayload(values: OcFormValues): OcPayload {
+  return {
+    numero_oc: values.numero_oc.trim(),
+    monto_uf: Number(values.monto_uf),
+    fecha_emision: values.fecha_emision === "" ? null : values.fecha_emision,
+    estado: values.estado,
+  };
+}
+
+/* ── Estados de Pago ─────────────────────────────────────────────────── */
+
+const ESTADOS_EP = ["pendiente", "cursado"] as const;
+
+export const epFormSchema = z.object({
+  numero_ep: z
+    .string()
+    .refine(
+      (v) => v !== "" && Number.isInteger(Number(v)) && Number(v) > 0,
+      "N° de EP inválido",
+    ),
+  monto_uf: numeroNoNegativo("Monto UF inválido").refine(
+    (v) => v !== "",
+    "El monto es obligatorio",
+  ),
+  fecha: z.string(),
+  estado: z.enum(ESTADOS_EP),
+  factura_url: z.union([z.literal(""), z.string().url("URL inválida")]),
+});
+
+export type EpFormValues = z.infer<typeof epFormSchema>;
+
+export const epPayloadSchema = z.object({
+  numero_ep: z.number().int().positive(),
+  monto_uf: z.number().min(0),
+  fecha: z.string().nullable(),
+  estado: z.enum(ESTADOS_EP),
+  factura_url: z.string().nullable(),
+});
+
+export type EpPayload = z.infer<typeof epPayloadSchema>;
+
+export function epFormToPayload(values: EpFormValues): EpPayload {
+  return {
+    numero_ep: Number(values.numero_ep),
+    monto_uf: Number(values.monto_uf),
+    fecha: values.fecha === "" ? null : values.fecha,
+    estado: values.estado,
+    factura_url: values.factura_url === "" ? null : values.factura_url,
+  };
+}
+
 /** Convierte los valores string del formulario al payload normalizado. */
 export function ccssFormToPayload(values: CcssFormValues): CcssPayload {
   return {

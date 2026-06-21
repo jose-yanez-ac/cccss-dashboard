@@ -12,7 +12,10 @@ import {
   TIPO_FINANCIAMIENTO_LABEL,
 } from "@/lib/constants";
 import { EstadoBadge } from "@/components/ccss/estado-badge";
+import { OcFormDialog } from "@/components/oc/oc-form-dialog";
+import { OcActions } from "@/components/oc/oc-actions";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -120,7 +123,14 @@ export default async function CcssDetallePage({
       </Card>
 
       <div className="space-y-4">
-        <h2 className="text-lg font-semibold">Órdenes de Compra</h2>
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-semibold">Órdenes de Compra</h2>
+          <OcFormDialog
+            mode="create"
+            ccssId={id}
+            trigger={<Button size="sm">Agregar OC</Button>}
+          />
+        </div>
         {ocs.length === 0 ? (
           <Card>
             <CardContent className="py-8 text-center text-sm text-muted-foreground">
@@ -142,9 +152,12 @@ export default async function CcssDetallePage({
                     <CardTitle className="text-base">
                       OC {oc.numero_oc}
                     </CardTitle>
-                    <Badge variant="outline">
-                      {ESTADO_OC_LABEL[oc.estado]}
-                    </Badge>
+                    <div className="flex items-center gap-2">
+                      <Badge variant="outline">
+                        {ESTADO_OC_LABEL[oc.estado]}
+                      </Badge>
+                      <OcActions ccssId={id} oc={oc} />
+                    </div>
                   </div>
                   <CardDescription>
                     Emitida: {formatDate(oc.fecha_emision) || "—"}
