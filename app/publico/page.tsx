@@ -17,37 +17,46 @@ export default async function PublicoPage() {
 
   return (
     <div className="min-h-screen bg-muted/30">
-      <header className="border-b bg-[var(--sidebar)] text-white">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 md:px-6">
-          <div className="leading-tight">
-            <p className="text-sm font-semibold">CCSS · Túnel Lo Ruiz</p>
-            <p className="text-[11px] text-white/60">
+      <header className="sticky top-0 z-40 border-b bg-[var(--sidebar)] text-white shadow-sm">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 md:px-6">
+          <div className="min-w-0 leading-tight">
+            <p className="truncate text-sm font-semibold">
+              CCSS · Túnel Lo Ruiz
+            </p>
+            <p className="truncate text-[11px] text-white/60">
               Dashboard público · solo lectura
             </p>
           </div>
           <Button
             variant="outline"
             size="sm"
-            className="bg-transparent text-white hover:bg-white/10"
+            className="shrink-0 bg-transparent text-white hover:bg-white/10"
             render={<Link href="/login" />}
           >
             <LogIn className="size-4" />
-            Iniciar sesión
+            <span className="hidden sm:inline">Iniciar sesión</span>
+            <span className="sm:hidden">Entrar</span>
           </Button>
         </div>
       </header>
 
-      <main className="mx-auto max-w-7xl px-4 py-6 md:px-6">
+      <main className="mx-auto max-w-7xl px-4 py-6 md:px-6 lg:py-8">
         <div className="mb-6">
-          <h1 className="text-2xl font-semibold tracking-tight">
+          <h1 className="text-xl font-semibold tracking-tight sm:text-2xl">
             Túnel Lo Ruiz — Cambios de Servicio
           </h1>
-          <p className="text-sm text-muted-foreground">
+          <p className="mt-1 text-sm text-muted-foreground">
             Indicadores del proyecto en tiempo real. Vista pública de solo
             lectura.
           </p>
         </div>
-        <PublicDashboard initial={initial} />
+        {initial ? (
+          <PublicDashboard initial={initial} />
+        ) : (
+          <p className="text-sm text-muted-foreground">
+            No se pudieron cargar los indicadores en este momento.
+          </p>
+        )}
       </main>
     </div>
   );

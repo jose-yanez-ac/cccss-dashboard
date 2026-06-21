@@ -89,3 +89,5 @@ Estado del backlog (`instructions.md` §9). `[ ]` pendiente · `[~]` en curso/bl
 - [x] **Responsividad:** navegación móvil con cajón deslizante (hamburguesa) en `app-shell.tsx`; diálogos OC/EP desplazables; tablas con scroll horizontal. Verificado `/` → 307 → `/publico`.
 - [x] **Ruta principal → dashboard público:** `app/page.tsx` redirige a `/publico`.
 - [x] **Tipografía Montserrat:** `app/layout.tsx` vía `next/font/google` como `--font-sans` (afecta texto y headings).
+- [x] **Fix logout:** el botón "Salir" daba error (server action con `redirect` dentro de un `DropdownMenuItem`/portal de Base UI). Ahora cierra sesión en cliente (`supabase.auth.signOut()` + `router.replace('/login')`) — robusto en todos los casos.
+- [x] **Responsive área pública:** header sticky con marca truncable y botón adaptable ("Iniciar sesión"/"Entrar"); filtros en grilla 2-col en móvil y fila en `sm+`; título escalable; guarda ante datos nulos. Verificado `/publico` 200.

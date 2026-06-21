@@ -74,7 +74,7 @@ function FilterSelect({
 }) {
   return (
     <Select value={value} onValueChange={(v) => onValueChange(v as string)}>
-      <SelectTrigger className="w-[170px]">
+      <SelectTrigger className="w-full sm:w-[160px]">
         <SelectValue placeholder={label} />
       </SelectTrigger>
       <SelectContent>
@@ -137,52 +137,59 @@ export function PublicDashboard({ initial }: { initial: DashboardPublic }) {
       className="space-y-6 transition-opacity"
       style={{ opacity: isPending ? 0.6 : 1 }}
     >
-      <div className="flex flex-wrap items-center gap-2">
-        <FilterSelect
-          label="Empresa"
-          value={filters.empresa}
-          onValueChange={(v) => applyFilters({ ...filters, empresa: v })}
-          options={data.empresas.map((e) => ({ value: e.id, label: e.nombre }))}
-        />
-        <FilterSelect
-          label="Fase"
-          value={filters.fase}
-          onValueChange={(v) => applyFilters({ ...filters, fase: v })}
-          options={Object.entries(FASE_LABEL).map(([value, label]) => ({
-            value,
-            label,
-          }))}
-        />
-        <FilterSelect
-          label="Estado"
-          value={filters.estado}
-          onValueChange={(v) => applyFilters({ ...filters, estado: v })}
-          options={Object.entries(ESTADO_CCSS).map(([value, cfg]) => ({
-            value,
-            label: cfg.label,
-          }))}
-        />
-        <FilterSelect
-          label="Sector"
-          value={filters.sector}
-          onValueChange={(v) => applyFilters({ ...filters, sector: v })}
-          options={Object.entries(SECTOR_LABEL).map(([value, label]) => ({
-            value,
-            label,
-          }))}
-        />
-        {filtersActive && (
-          <button
-            type="button"
-            onClick={() => applyFilters(INITIAL_FILTERS)}
-            className="text-sm text-muted-foreground underline-offset-4 hover:underline"
-          >
-            Limpiar filtros
-          </button>
-        )}
-        <span className="ml-auto text-sm text-muted-foreground">
-          {kpis.total_ccss} CCSS
-        </span>
+      <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+        <div className="grid grid-cols-2 gap-2 sm:contents">
+          <FilterSelect
+            label="Empresa"
+            value={filters.empresa}
+            onValueChange={(v) => applyFilters({ ...filters, empresa: v })}
+            options={data.empresas.map((e) => ({
+              value: e.id,
+              label: e.nombre,
+            }))}
+          />
+          <FilterSelect
+            label="Fase"
+            value={filters.fase}
+            onValueChange={(v) => applyFilters({ ...filters, fase: v })}
+            options={Object.entries(FASE_LABEL).map(([value, label]) => ({
+              value,
+              label,
+            }))}
+          />
+          <FilterSelect
+            label="Estado"
+            value={filters.estado}
+            onValueChange={(v) => applyFilters({ ...filters, estado: v })}
+            options={Object.entries(ESTADO_CCSS).map(([value, cfg]) => ({
+              value,
+              label: cfg.label,
+            }))}
+          />
+          <FilterSelect
+            label="Sector"
+            value={filters.sector}
+            onValueChange={(v) => applyFilters({ ...filters, sector: v })}
+            options={Object.entries(SECTOR_LABEL).map(([value, label]) => ({
+              value,
+              label,
+            }))}
+          />
+        </div>
+        <div className="flex items-center justify-between gap-3 sm:ml-auto sm:justify-end">
+          {filtersActive && (
+            <button
+              type="button"
+              onClick={() => applyFilters(INITIAL_FILTERS)}
+              className="text-sm text-muted-foreground underline-offset-4 hover:underline"
+            >
+              Limpiar filtros
+            </button>
+          )}
+          <span className="text-sm font-medium text-muted-foreground">
+            {kpis.total_ccss} CCSS
+          </span>
+        </div>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
