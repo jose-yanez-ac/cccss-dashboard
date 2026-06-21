@@ -17,13 +17,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
   Table,
   TableBody,
   TableCell,
@@ -31,40 +24,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  FilterSelect,
+  FILTER_ALL as ALL,
+  type FilterOption,
+} from "@/components/filter-select";
 import { OcFormDialog } from "@/components/oc/oc-form-dialog";
 import { OcActions } from "@/components/oc/oc-actions";
-
-const ALL = "all";
-
-type FilterOption = { value: string; label: string };
-
-function FilterSelect({
-  label,
-  value,
-  onValueChange,
-  options,
-}: {
-  label: string;
-  value: string;
-  onValueChange: (value: string) => void;
-  options: FilterOption[];
-}) {
-  return (
-    <Select value={value} onValueChange={(v) => onValueChange(v as string)}>
-      <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder={label} />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value={ALL}>{label}: todas</SelectItem>
-        {options.map((o) => (
-          <SelectItem key={o.value} value={o.value}>
-            {o.label}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
-  );
-}
 
 export function OcTable({
   data,

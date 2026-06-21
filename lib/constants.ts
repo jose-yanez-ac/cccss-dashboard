@@ -4,6 +4,12 @@
  * del comité. No hardcodear colores en componentes.
  */
 
+/** Colores corporativos generales (marca). */
+export const CORPORATE = {
+  teal: "#003c4b",
+  orange: "#eb8316",
+} as const;
+
 export const COLORS = {
   navy: "#12243B",
   petrol: "#0E5A82",

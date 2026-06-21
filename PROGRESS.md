@@ -91,3 +91,10 @@ Estado del backlog (`instructions.md` §9). `[ ]` pendiente · `[~]` en curso/bl
 - [x] **Tipografía Montserrat:** `app/layout.tsx` vía `next/font/google` como `--font-sans` (afecta texto y headings).
 - [x] **Fix logout:** el botón "Salir" daba error (server action con `redirect` dentro de un `DropdownMenuItem`/portal de Base UI). Ahora cierra sesión en cliente (`supabase.auth.signOut()` + `router.replace('/login')`) — robusto en todos los casos.
 - [x] **Responsive área pública:** header sticky con marca truncable y botón adaptable ("Iniciar sesión"/"Entrar"); filtros en grilla 2-col en móvil y fila en `sm+`; título escalable; guarda ante datos nulos. Verificado `/publico` 200.
+
+## Correcciones de revisión visual (2ª ronda)
+- [x] **#1 Gráficos en blanco en móvil:** las grillas de gráficos usaban columna implícita (ancho 0 para `ResponsiveContainer`). Añadido `grid-cols-1` base en dashboards autenticado y público.
+- [x] **#2 Login rediseñado** con colores corporativos `#003c4b` / `#eb8316` (`lib/constants.ts → CORPORATE`): panel de marca petróleo + acento naranja, responsivo, con enlace al público.
+- [x] **#3 Placeholder "all" en filtros:** `FilterSelect` unificado en `components/filter-select.tsx` (elimina 5 duplicados); el trigger muestra el nombre del filtro cuando está en "todos".
+- [x] **#4 Desborde horizontal (escritorio):** `min-w-0` en la columna de contenido del shell → las tablas anchas hacen scroll interno en vez de empujar la página.
+- [x] **#5 Cerrar sidebar al hacer click fuera:** cajón móvil cierra con click en el fondo (overlay) y con tecla Escape.

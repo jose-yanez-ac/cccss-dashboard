@@ -25,13 +25,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
   Table,
   TableBody,
   TableCell,
@@ -39,42 +32,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  FilterSelect,
+  FILTER_ALL as ALL,
+  type FilterOption,
+} from "@/components/filter-select";
 import { FacturadoDonut } from "@/components/charts/facturado-donut";
 import { ComparativoBars } from "@/components/charts/comparativo-bars";
 import { PorEmpresaBars } from "@/components/charts/por-empresa-bars";
 import { EstadoDonut } from "@/components/charts/estado-donut";
-
-const ALL = "all";
-
-type FilterOption = { value: string; label: string };
-
-function FilterSelect({
-  label,
-  value,
-  onValueChange,
-  options,
-}: {
-  label: string;
-  value: string;
-  onValueChange: (value: string) => void;
-  options: FilterOption[];
-}) {
-  return (
-    <Select value={value} onValueChange={(v) => onValueChange(v as string)}>
-      <SelectTrigger className="w-[170px]">
-        <SelectValue placeholder={label} />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value={ALL}>{label}: todos</SelectItem>
-        {options.map((o) => (
-          <SelectItem key={o.value} value={o.value}>
-            {o.label}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
-  );
-}
 
 type Filters = {
   empresa: string;
@@ -203,7 +169,7 @@ export function DashboardView({
         </span>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <KpiCard
           title="Total contratado"
           value={`${formatUF(contratado)} UF`}
@@ -232,7 +198,7 @@ export function DashboardView({
         />
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <Card>
           <CardHeader>
             <CardTitle className="text-base">
@@ -259,7 +225,7 @@ export function DashboardView({
         </Card>
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <Card>
           <CardHeader>
             <CardTitle className="text-base">Contratado por empresa</CardTitle>
