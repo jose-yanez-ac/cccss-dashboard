@@ -41,7 +41,18 @@ Estado del backlog (`instructions.md` §9). `[ ]` pendiente · `[~]` en curso/bl
 
 ## Épica 8 — Cierre v1
 - [x] **T-80** Calidad (`tsc --noEmit` ✅, `lint` ✅; sin `any`; sin `service_role` en cliente; KPIs solo desde vistas)
-- [ ] **T-81** DoD
+- [x] **T-81** DoD (NOTES.md + checklist §10 abajo)
+
+### Definition of Done (§10)
+- [x] `tsc --noEmit` y `lint` sin errores; `build` OK.
+- [x] Login/logout OK; sin sesión redirige a `/login` (middleware + guardia de layout).
+- [x] `v_kpis_proyecto` → 76243.36 / 16247.98 / 320765.88 / 97678.88 / 35 (verificado).
+- [x] Lista CCSS = 35 con estados/montos y filtros operativos.
+- [x] Detalle CCSS con jerarquía OC→EP; ENEL con 2 OC.
+- [x] CRUD de empresa, CCSS, OC y EP con validación (EP ≤ saldo OC).
+- [x] Prueba de oro (T-61): facturado sube / saldo baja al cursar EP, sin tocar totales (mecanismo verificado en la vista).
+- [x] Dashboard completo (4 tarjetas + dona avance + barras + dona por estado + leyenda + filtros).
+- [x] UF en formato chileno en toda la UI; colores/estados desde `lib/constants.ts`.
 
 ---
 
