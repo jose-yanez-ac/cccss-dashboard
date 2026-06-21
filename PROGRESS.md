@@ -17,7 +17,7 @@ Estado del backlog (`instructions.md` §9). `[ ]` pendiente · `[~]` en curso/bl
 - [x] **T-22** Dashboard placeholder (`app/(app)/dashboard/page.tsx`)
 
 ## Épica 3 — Capa de datos
-- [ ] **T-30** Queries (`lib/queries.ts`)
+- [x] **T-30** Queries (`lib/queries.ts`) — agregados solo desde vistas; `v_kpis_proyecto` verificada contra cifras de oro (76243.36 / 16247.98 / 320765.88 / 97678.88 / 35).
 
 ## Épica 4 — Mantenedor Empresas
 - [ ] **T-40** Lista empresas
