@@ -164,7 +164,7 @@ export function EpFormDialog({
       }}
     >
       {trigger && <DialogTrigger render={trigger} />}
-      <DialogContent>
+      <DialogContent className="max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
             {mode === "create" ? "Nuevo estado de pago" : "Editar EP"}

@@ -20,7 +20,13 @@ export const NAV_ITEMS = [
   { href: "/empresas", label: "Empresas", icon: Building2 },
 ] as const;
 
-export function SidebarNav({ collapsed = false }: { collapsed?: boolean }) {
+export function SidebarNav({
+  collapsed = false,
+  onNavigate,
+}: {
+  collapsed?: boolean;
+  onNavigate?: () => void;
+}) {
   const pathname = usePathname();
 
   return (
@@ -31,6 +37,7 @@ export function SidebarNav({ collapsed = false }: { collapsed?: boolean }) {
           <Link
             key={href}
             href={href}
+            onClick={onNavigate}
             title={collapsed ? label : undefined}
             className={cn(
               "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",

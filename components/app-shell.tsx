@@ -2,7 +2,14 @@
 
 import { useState } from "react";
 import { usePathname } from "next/navigation";
-import { PanelLeftClose, PanelLeftOpen, LogOut, User } from "lucide-react";
+import {
+  PanelLeftClose,
+  PanelLeftOpen,
+  LogOut,
+  User,
+  Menu,
+  X,
+} from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { NAV_ITEMS, SidebarNav } from "@/components/sidebar-nav";
@@ -38,9 +45,45 @@ export function AppShell({
 }) {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
     <div className="flex min-h-screen bg-muted/30">
+      {/* Cajón de navegación móvil */}
+      {mobileOpen && (
+        <div className="fixed inset-0 z-50 md:hidden">
+          <div
+            className="absolute inset-0 bg-black/50"
+            onClick={() => setMobileOpen(false)}
+            aria-hidden
+          />
+          <aside className="absolute inset-y-0 left-0 flex w-64 flex-col bg-sidebar text-sidebar-foreground shadow-xl">
+            <div className="flex h-14 items-center justify-between border-b border-sidebar-border px-4">
+              <div className="leading-tight">
+                <p className="text-sm font-semibold text-sidebar-accent-foreground">
+                  CCSS · Túnel Lo Ruiz
+                </p>
+                <p className="text-[11px] text-sidebar-foreground/60">
+                  Gestión de Cambios de Servicios
+                </p>
+              </div>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-sidebar-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
+                onClick={() => setMobileOpen(false)}
+                aria-label="Cerrar menú"
+              >
+                <X className="size-4" />
+              </Button>
+            </div>
+            <div className="flex-1 overflow-y-auto p-3">
+              <SidebarNav onNavigate={() => setMobileOpen(false)} />
+            </div>
+          </aside>
+        </div>
+      )}
+
       <aside
         className={cn(
           "hidden shrink-0 flex-col bg-sidebar text-sidebar-foreground transition-[width] duration-200 md:flex",
@@ -76,6 +119,15 @@ export function AppShell({
       <div className="flex flex-1 flex-col">
         <header className="flex h-14 items-center justify-between gap-4 border-b bg-background px-4 md:px-6">
           <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="md:hidden"
+              onClick={() => setMobileOpen(true)}
+              aria-label="Abrir menú"
+            >
+              <Menu className="size-4" />
+            </Button>
             <Button
               variant="ghost"
               size="icon"

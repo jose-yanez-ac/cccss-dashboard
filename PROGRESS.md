@@ -84,3 +84,8 @@ Estado del backlog (`instructions.md` §9). `[ ]` pendiente · `[~]` en curso/bl
 ## Épica H — Verificación y reporte
 - [x] **T3-H1** Verificación integral: `tsc`/`lint`/`build` limpios; e2e con curl → `/publico` 200 sin sesión (con cifras de oro), `/dashboard` y `/cambios-servicio` 307 → `/login`.
 - [x] **T3-H2** Resumen detallado (ver NOTES.md "Resumen Iteración 1.1").
+
+## Ajustes adicionales
+- [x] **Responsividad:** navegación móvil con cajón deslizante (hamburguesa) en `app-shell.tsx`; diálogos OC/EP desplazables; tablas con scroll horizontal. Verificado `/` → 307 → `/publico`.
+- [x] **Ruta principal → dashboard público:** `app/page.tsx` redirige a `/publico`.
+- [x] **Tipografía Montserrat:** `app/layout.tsx` vía `next/font/google` como `--font-sans` (afecta texto y headings).
