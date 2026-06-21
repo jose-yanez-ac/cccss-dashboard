@@ -16,6 +16,16 @@ export function formatUF(value: number | null | undefined): string {
   return UF_FORMATTER.format(value ?? 0);
 }
 
+const PCT_FORMATTER = new Intl.NumberFormat("es-CL", {
+  minimumFractionDigits: 1,
+  maximumFractionDigits: 1,
+});
+
+/** Formatea un porcentaje al estilo chileno: `21.31` → `"21,3%"`. */
+export function formatPct(value: number | null | undefined): string {
+  return `${PCT_FORMATTER.format(value ?? 0)}%`;
+}
+
 const DATE_FORMATTER = new Intl.DateTimeFormat("es-CL", {
   day: "2-digit",
   month: "2-digit",

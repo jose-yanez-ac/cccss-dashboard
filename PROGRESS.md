@@ -34,7 +34,7 @@ Estado del backlog (`instructions.md` §9). `[ ]` pendiente · `[~]` en curso/bl
 - [x] **T-61** CRUD EP (prueba de oro) — validación Σ EP cursados ≤ monto OC (cliente + server autoritativo). Verificado en BD: `facturado_uf (vista) = Σ cursado`; revalida lista+detalle+dashboard.
 
 ## Épica 7 — Dashboard
-- [ ] **T-70** Tarjetas KPI
+- [x] **T-70** Tarjetas KPI (desde `v_kpis_proyecto`: 76.243,36 · 16.247,98 (21,3%) · 320.765,88 · 223.087,00)
 - [ ] **T-71** Gráficos núcleo
 - [ ] **T-72** Distribución
 - [ ] **T-73** Filtros del dashboard
