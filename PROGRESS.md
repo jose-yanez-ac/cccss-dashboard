@@ -24,7 +24,7 @@ Estado del backlog (`instructions.md` §9). `[ ]` pendiente · `[~]` en curso/bl
 - [x] **T-41** CRUD empresas (Server Actions + revalidatePath + sonner; manejo RLS). Patrón base reutilizable.
 
 ## Épica 5 — Cambios de Servicio
-- [ ] **T-50** Lista CCSS
+- [x] **T-50** Lista CCSS (desde `v_ccss_resumen`, 35 filas, UF y badges de estado)
 - [ ] **T-51** Filtros CCSS
 - [ ] **T-52** CRUD CCSS
 - [ ] **T-53** Detalle CCSS

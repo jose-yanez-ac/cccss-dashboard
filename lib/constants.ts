@@ -25,3 +25,32 @@ export const ESTADO_CCSS = {
 } as const;
 
 export type EstadoCcss = keyof typeof ESTADO_CCSS;
+
+export const FASE_LABEL = {
+  ingenieria: "Ingeniería",
+  construccion: "Construcción",
+} as const;
+
+export const TIPO_FINANCIAMIENTO_LABEL = {
+  con_oc: "Con OC",
+  proyeccion: "Proyección",
+  autofinanciamiento: "Autofinanciamiento",
+} as const;
+
+export const SECTOR_LABEL = {
+  AVN: "AVN",
+  AGV: "AGV",
+  otro: "Otro",
+} as const;
+
+export const ESTADO_OC_LABEL = {
+  emitida: "Emitida",
+  pagada_parcial: "Pagada parcial",
+  pagada_total: "Pagada total",
+  anulada: "Anulada",
+} as const;
+
+export const ESTADO_EP_LABEL = {
+  pendiente: "Pendiente",
+  cursado: "Cursado",
+} as const;
