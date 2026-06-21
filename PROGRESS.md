@@ -9,7 +9,7 @@ Estado del backlog (`instructions.md` §9). `[ ]` pendiente · `[~]` en curso/bl
 - [x] **T-10** Cliente browser (`lib/supabase/client.ts`)
 - [x] **T-11** Cliente server (`lib/supabase/server.ts`)
 - [x] **T-12** Middleware de sesión (`middleware.ts` + `lib/supabase/middleware.ts`)
-- [ ] **T-13** Utilidades base (`lib/format.ts`, `lib/constants.ts`)
+- [x] **T-13** Utilidades base (`lib/format.ts`, `lib/constants.ts`) — CA `formatUF(76243.36) === "76.243,36"` verificado.
 
 ## Épica 2 — Autenticación y shell
 - [ ] **T-20** Login
