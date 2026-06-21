@@ -16,13 +16,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { Input } from "@/components/ui/input";
 import { CcssFormDialog } from "@/components/ccss/ccss-form-dialog";
 
 export function CcssRowActions({
@@ -38,9 +41,14 @@ export function CcssRowActions({
 }) {
   const [editOpen, setEditOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const [confirmText, setConfirmText] = useState("");
   const [isPending, startTransition] = useTransition();
 
+  // Segunda barrera: el botón destructivo se habilita solo si el texto coincide.
+  const canDelete = confirmText.trim() === nombre.trim() && !isPending;
+
   function onConfirmDelete() {
+    if (!canDelete) return;
     startTransition(async () => {
       const result = await deleteCcss(id);
       if (!result.ok) {
@@ -93,33 +101,52 @@ export function CcssRowActions({
         />
       )}
 
-      <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Eliminar cambio de servicio</DialogTitle>
-            <DialogDescription>
-              ¿Eliminar «{nombre}»? Se eliminarán también sus OC y EP asociados.
-              Esta acción no se puede deshacer.
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => setDeleteOpen(false)}
-              disabled={isPending}
-            >
+      <AlertDialog
+        open={deleteOpen}
+        onOpenChange={(o) => {
+          setDeleteOpen(o);
+          if (!o) setConfirmText("");
+        }}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Eliminar cambio de servicio</AlertDialogTitle>
+            <AlertDialogDescription>
+              Esta acción elimina «{nombre}» junto con todas sus órdenes de
+              compra y estados de pago asociados. No se puede deshacer.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+
+          <div className="space-y-2">
+            <p className="text-sm text-muted-foreground">
+              Para confirmar, escribe el nombre exacto del CCSS:
+            </p>
+            <p className="rounded bg-muted px-2 py-1 text-sm font-medium">
+              {nombre}
+            </p>
+            <Input
+              value={confirmText}
+              onChange={(e) => setConfirmText(e.target.value)}
+              placeholder="Escribe el nombre del CCSS"
+              autoComplete="off"
+              aria-label="Confirmación del nombre del CCSS"
+            />
+          </div>
+
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={isPending}>
               Cancelar
-            </Button>
-            <Button
+            </AlertDialogCancel>
+            <AlertDialogAction
               variant="destructive"
+              disabled={!canDelete}
               onClick={onConfirmDelete}
-              disabled={isPending}
             >
-              {isPending ? "Eliminando…" : "Eliminar"}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+              {isPending ? "Eliminando…" : "Eliminar definitivamente"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 }
