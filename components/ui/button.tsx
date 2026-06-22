@@ -44,12 +44,19 @@ function Button({
   className,
   variant = "default",
   size = "default",
+  nativeButton,
+  render,
   ...props
 }: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {
+  // Cuando se pasa `render` (p. ej. un <Link> que produce un <a>), el elemento
+  // dejaría de ser un <button> nativo. Base UI avisa salvo que indiquemos
+  // nativeButton={false}. Lo inferimos por defecto y permitimos override.
   return (
     <ButtonPrimitive
       data-slot="button"
       className={cn(buttonVariants({ variant, size, className }))}
+      nativeButton={nativeButton ?? render === undefined}
+      render={render}
       {...props}
     />
   )

@@ -1,14 +1,14 @@
 # instructions.md — Brief de ejecución para Claude Code
 ## Plataforma de Gestión de Cambios de Servicios (CCSS) · Túnel Lo Ruiz
 
-> **Este archivo es la fuente de verdad operativa del proyecto.** Léelo completo antes de actuar. Contiene el contexto, los roles que debes asumir, la metodología de trabajo, los principios de consistencia y el **backlog de tareas atómicas** con sus criterios de aceptación. Avanza de forma autónoma, una tarea a la vez, validando antes de continuar. `CLAUDE.md` resume las mismas convenciones para sesiones cortas; si hay conflicto, **manda este archivo**.
+> **Este archivo es la fuente de verdad operativa del proyecto.** Léelo completo antes de actuar. Contiene el contexto, los roles que debes asumir, la metodología de trabajo, los principios de consistencia y el **backlog de tareas acotadas** con sus criterios de aceptación. Avanza de forma autónoma, una tarea a la vez, validando antes de continuar. `CLAUDE.md` resume las mismas convenciones para sesiones cortas; si hay conflicto, **manda este archivo**.
 
 ---
 
 ## 1. Cómo debes operar (resumen ejecutivo)
 
-- Trabaja el **backlog (§9)** en orden, **una tarea atómica a la vez**. No agrupes tareas ni adelantes trabajo futuro.
-- Para cada tarea aplica el **ciclo atómico (§7)**: planificar → implementar mínimo → validar → commit → siguiente.
+- Trabaja el **backlog (§9)** en orden, **una tarea acotada a la vez**. No agrupes tareas ni adelantes trabajo futuro.
+- Para cada tarea aplica el **ciclo por tarea (§7)**: planificar → implementar mínimo → validar → commit → siguiente.
 - Respeta sin excepción los **principios de consistencia (§6)**. Si una tarea te obligara a romper uno, **detente y avisa**.
 - Mantén un archivo **`PROGRESS.md`** con el estado de cada tarea (`[ ]` / `[x]`), actualizado en cada commit.
 - **Detente y pregunta** solo en las condiciones de §7.4 (acción humana requerida, ambigüedad real, o riesgo de romper un guardrail). En lo demás, decide y avanza.
@@ -107,7 +107,7 @@ Durante el desarrollo cambias de "sombrero" según la fase de cada tarea. Antes 
 
 ---
 
-## 7. Metodología de trabajo (ciclo atómico)
+## 7. Metodología de trabajo (ciclo por tarea)
 
 ### 7.1 Tamaño de una tarea
 Una tarea = un cambio cohesionado y verificable (1 archivo principal + sus dependencias directas). Si una tarea “crece”, divídela y avisa en `PROGRESS.md`.
@@ -173,7 +173,7 @@ Reglas: nombres de archivos en `kebab-case`; componentes en `PascalCase`; funcio
 
 ---
 
-## 9. Backlog de tareas atómicas
+## 9. Backlog de tareas acotadas
 
 > Ejecuta en orden. Cada tarea trae **objetivo**, **archivos** y **criterios de aceptación (CA)**. Marca el avance en `PROGRESS.md`.
 
@@ -256,4 +256,4 @@ Auditoría con triggers, roles diferenciados en UI (aprobador/visualizador), ale
 ---
 
 ### Primer movimiento esperado
-Crea `PROGRESS.md` con el backlog de §9 en casillas, ejecuta **T-00** (verificación de tipos) y, según su resultado, continúa con **T-10** o detente para pedir la generación de tipos. A partir de ahí, avanza tarea por tarea siguiendo el ciclo atómico.
+Crea `PROGRESS.md` con el backlog de §9 en casillas, ejecuta **T-00** (verificación de tipos) y, según su resultado, continúa con **T-10** o detente para pedir la generación de tipos. A partir de ahí, avanza tarea por tarea siguiendo el ciclo de trabajo.
